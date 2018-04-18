@@ -1,13 +1,13 @@
 from django.db import models
 
 class Author(models.Model):
-	firstName = models.CharField(max_length=20)
-	lastName = models.CharField(max_length=20, null = True)
+    firstName = models.CharField(max_length=20)
+    lastName = models.CharField(max_length=20, null = True)
 
 class Experiments(models.Model):
-	experimentName = models.CharField(max_length = 100)
-	conditions = models.CharField(max_length = 1000, null = True)
-	authorID = models.ForeignKey(Author, on_delete=models.CASCADE)
+    experimentName = models.CharField(max_length = 100)
+    conditions = models.CharField(max_length = 1000, null = True)
+    authorID = models.ForeignKey(Author, on_delete=models.CASCADE)
 
 class Files(models.Model):
     MIMETYPE = (
@@ -31,27 +31,27 @@ class Files(models.Model):
         ('unknown', 'unknown'),
     )
 
-	experimentID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
-	path = models.CharField(max_length=100)
-	mimetype = models.CharField(
+    experimentID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
+    path = models.CharField(max_length=100)
+    mimetype = models.CharField(
         choices=MIMETYPE, max_length=20, default='Text'
     )
-	mimetype_type = models.CharField(
+    mimetype_type = models.CharField(
         choices=MIMETYPE_TYPE, max_length=20, default='txt'
     )
 
 
 class textFeatures(models.Model):
-	numberOfA = models.IntegerField()
-	numberOfC = models.IntegerField()
-	numberOfG = models.IntegerField()
-	numberOfT = models.IntegerField()
-	textFileID = models.ForeignKey(Files, on_delete=models.CASCADE)
+    numberOfA = models.IntegerField()
+    numberOfC = models.IntegerField()
+    numberOfG = models.IntegerField()
+    numberOfT = models.IntegerField()
+    textFileID = models.ForeignKey(Files, on_delete=models.CASCADE)
 
 class imageFeatures(models.Model):
-	uptoFifty = models.IntegerField()
-	fiftyToHundred = models.IntegerField()
-	hundredToOneFifty = models.IntegerField()
-	oneFiftyToTwoHundred = models.IntegerField()
-	twoHundredToTwoFiftyFive = models.IntegerField()
-	imageFileID = models.ForeignKey(Files, on_delete=models.CASCADE)
+    uptoFifty = models.IntegerField()
+    fiftyToHundred = models.IntegerField()
+    hundredToOneFifty = models.IntegerField()
+    oneFiftyToTwoHundred = models.IntegerField()
+    twoHundredToTwoFiftyFive = models.IntegerField()
+    imageFileID = models.ForeignKey(Files, on_delete=models.CASCADE)
