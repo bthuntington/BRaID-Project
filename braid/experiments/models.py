@@ -10,9 +10,6 @@ class Experiments(models.Model):
 	authorID = models.ForeignKey(Author, on_delete=models.CASCADE)
 
 class Files(models.Model):
-	experimentID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
-	path = models.CharField(max_length = 100)
-
     MIMETYPE = (
         ('Audio', 'Audio'),
         ('Video', 'Video'),
@@ -34,12 +31,13 @@ class Files(models.Model):
         ('unknown', 'unknown'),
     )
 
+	experimentID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
+	path = models.CharField(max_length=100)
 	mimetype = models.CharField(
-        choices=MIMETYPE, max_length = 20, default = 'Text'
+        choices=MIMETYPE, max_length=20, default='Text'
     )
-
 	mimetype_type = models.CharField(
-        choices=MIMETYPE_TYPE, max_length = 20, default = 'txt'
+        choices=MIMETYPE_TYPE, max_length=20, default='txt'
     )
 
 
