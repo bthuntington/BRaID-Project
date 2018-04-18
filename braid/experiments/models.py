@@ -13,26 +13,26 @@ class Files(models.Model):
 	experimentID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
 	path = models.CharField(max_length = 100)
 
-	MIMETYPE = (
-	('Audio', 'Audio'),
-	('Video', 'Video'),
-	('Text', 'Text'),
-	('Unknown', 'Unknown'),
-	('Image', 'Image'),
-	)
+    MIMETYPE = (
+        ('Audio', 'Audio'),
+        ('Video', 'Video'),
+        ('Text', 'Text'),
+        ('Unknown', 'Unknown'),
+        ('Image', 'Image'),
+    )
 
-	MIMETYPE_TYPE=(
-			('jpg', 'jpg'),
-            ('png', 'png'),
-			('gif', 'gif'),
-			('mp4', 'mp4'),
-            ('tif', 'tif'),
-			('avi', 'avi'),
-			('txt', 'txt'),
-			('csv', 'csv'),
-			('xls', 'xls'),
-			('unknown', 'unknown'),
-	)
+    MIMETYPE_TYPE=(
+        ('jpg', 'jpg'),
+        ('png', 'png'),
+        ('gif', 'gif'),
+        ('mp4', 'mp4'),
+        ('tif', 'tif'),
+        ('avi', 'avi'),
+        ('txt', 'txt'),
+        ('csv', 'csv'),
+        ('xls', 'xls'),
+        ('unknown', 'unknown'),
+    )
 
 	mimetype = models.CharField(
         choices=MIMETYPE, max_length = 20, default = 'Text'
