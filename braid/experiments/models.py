@@ -4,6 +4,9 @@ class Author(models.Model):
     firstName = models.CharField(max_length=20)
     lastName = models.CharField(max_length=20, null = True)
 
+    def __str__(self):
+        return self.firstName
+
 class Experiments(models.Model):
     experimentName = models.CharField(max_length = 100)
     conditions = models.CharField(max_length = 1000, null = True)
