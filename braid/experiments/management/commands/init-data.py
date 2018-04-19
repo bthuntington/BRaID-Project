@@ -1,15 +1,4 @@
-import os, sys
-
-def django_setup():
-    # Setup environ
-    sys.path.append(os.getcwd())
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "braid.settings")
-
-    # Setup django
-    import django
-    django.setup()
-
-django_setup()
+from django.core.management.base import BaseCommand
 
 from experiments.models import Author
 
@@ -30,10 +19,15 @@ def view():
     print(Author.objects.all())
 
 
-if __name__ == '__main__':
-    clean_db()
-    create_data()
-    view()
+class Command(BaseCommand):
+    def handle(self, *args, **kwargs):
+        clean_db()
+        create_data()
+        view()
+
+
+
+
 
 # #########################################
 # ##########################################
