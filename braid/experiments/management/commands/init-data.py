@@ -9,20 +9,63 @@ def clean_db():
     ImageFeatures.objects.all().delete()
     TextFeatures.objects.all().delete()
 
+# do I need to do this or is there already a library??
+MIME_TYPES = {
+    'tif': 'Image',
+    'xlsx': 'Text',
+    'unknown': 'Unknown', # TODO: we defined... is this correct?
+}
+
+
+def create_author(first_name):
+    return Author.objects.create(first_name=first_name)
+
 
 def create_authors(first_names):
-    return [Author.objects.create(first_name=first) for first in first_names]
+    return [create_author(first) for first in first_names]
 
+
+def create_experiment(name, author):
+    return Experiments.objects.create(experiment_name=name, author_ID=author)
+
+
+def create_file(experiment, path, mimetype_type):
+    return Files.objects.create(
+        experiment_ID=experiment,
+        path=path,
+        mimetype=MIME_TYPES[mimetype_type],
+        mimetype_type=mimetype_type)
+
+
+def init_experiment(author_name, experiment_name, data):
+    author = create_author(author_name)
+    experiment = create_experiment(experiment_name, author)
+    for entry in data:
+        f = create_file(experiment, entry[0], entry[1])
+        # TODO: can I do feature extraction here? create_features(...)
 
 def create_data():
-    author_names = ['Camilleri', 'Franco', 'Pettygrove', 'Luke']
-    (camilleri, franco, pettygrove, luke) = create_authors(author_names)
-    camilleridataset = Experiments.objects.create(experiment_name = 'CamilleriDataSet', conditions = None, author_ID = camilleri)
-    francodataset = Experiments.objects.create(experiment_name = 'FrancoDataSet', conditions = None, author_ID = franco)
-    pettygrovedataset = Experiments.objects.create(experiment_name = 'PettygroveDataSet', conditions = None, author_ID = pettygrove)
-    lukedataset = Experiments.objects.create(experiment_name = 'LukeDataSet', conditions = None, author_ID = luke)
-    file = Files.objects.create(experiment_ID = camilleridataset, path = "data/ImageData/CamilleriDataSet/co-culture-confocal-T600-LC", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = camilleridataset, path = "data/ImageData/CamilleriDataSet/example co-culture biofilm-LC", mimetype = 'Text', mimetype_type = 'xlsx')
+    author_names = ['Franco', 'Pettygrove', 'Luke']
+    (franco, pettygrove, luke) = create_authors(author_names)
+
+    francodataset = create_experiment('FrancoDataSet', franco)
+    pettygrovedataset = create_experiment('PettygroveDataSet', pettygrove)
+    lukedataset = create_experiment('LukeDataSet', luke)
+
+
+
+
+    # set camilleri data
+    # TODO: decide if this is a good abstraction
+    init_experiment(
+        'Camilleri',
+        'CamilleriDataSet',
+        (
+            ('data/ImageData/CamilleriDataSet/co-culture-confocal-T600-LC', 'tif'),
+            ('data/ImageData/CamilleriDataSet/example co-culture biofilm-LC', 'xlsx'),
+        )
+    )
+
 
     file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EAL-10230x", mimetype = 'Image', mimetype_type = 'png')
     file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EAL-23000x", mimetype = 'Image', mimetype_type = 'png')
@@ -123,17 +166,38 @@ def create_data():
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001", mimetype = 'Text', mimetype_type = 'fastq')
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R1_001.fastq", mimetype = 'unknown', mimetype_type = 'gz')
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001.fastq", mimetype = 'unknown', mimetype_type = 'gz')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/Csubt_wholegenome", mimetype = 'unknown', mimetype_type = 'unknown')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/Mthermo_wholegenome", mimetype = 'unknown', mimetype_type = 'unknown')
+
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_pe", mimetype = 'unknown', mimetype_type = 'unknown')
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_se", mimetype = 'unknown', mimetype_type = 'unknown')
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R2_pe", mimetype = 'unknown', mimetype_type = 'unknown')
     file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_se", mimetype = 'unknown', mimetype_type = 'unknown')
 
-    fileA = Files.objects.get(pk = 201) #CSUBT whole genome file
-    fileB = Files.objects.get(pk = 202) ##Mthermo whole genome file
-    file1 = TextFeatures.objects.create(number_of_A = 837918, number_of_C = 505786, number_of_G = 504663 , number_of_T = 841082, text_file_ID = fileA) #LukeDataSet small genome
-    file2 = TextFeatures.objects.create(number_of_A = 439339, number_of_C = 433130 , number_of_G = 434571, number_of_T = 444338, text_file_ID = fileB)#LukeDataSet small genome
+
+
+    c_subt = create_file(
+        lukedataset,
+        'data/OmicsData/LukeDataset/SmallMetagenome/Csubt_wholegenome',
+        'unknown')
+    m_thermo = create_file(
+        lukedataset,
+        'data/OmicsData/LukeDataset/SmallMetagenome/Mthermo_wholegenome',
+        'unknown')
+
+
+
+    TextFeatures.objects.create(
+        number_of_A = 837918,
+        number_of_C = 505786,
+        number_of_G = 504663 ,
+        number_of_T = 841082,
+        text_file_ID=c_subt)
+
+    TextFeatures.objects.create(
+        number_of_A=439339,
+        number_of_C=433130 ,
+        number_of_G=434571,
+        number_of_T=444338,
+        text_file_ID=m_thermo)
 
 def view():
     print(Author.objects.all())
