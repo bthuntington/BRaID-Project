@@ -12,8 +12,17 @@ def clean_db():
 # do I need to do this or is there already a library??
 MIME_TYPES = {
     'tif': 'Image',
+    'png': 'Image',
     'xlsx': 'Text',
+    'xls': 'Text',
+    'lif': 'Text',
+    'fastq': 'Text',
+    'z' : 'Text',
+    'txt' : 'Text',
+    'avi': 'Video',
     'unknown': 'Unknown', # TODO: we defined... is this correct?
+    'zip' : 'Unknown',
+    'gz' : 'Unknown',
 }
 
 
@@ -45,15 +54,11 @@ def init_experiment(author_name, experiment_name, data):
         # TODO: can I do feature extraction here? create_features(...)
 
 def create_data():
-    author_names = ['Franco', 'Pettygrove', 'Luke']
-    (franco, pettygrove, luke) = create_authors(author_names)
+    #author_names = ['Pettygrove', 'Luke']
+    #(pettygrove, luke) = create_authors(author_names)
 
-    francodataset = create_experiment('FrancoDataSet', franco)
-    pettygrovedataset = create_experiment('PettygroveDataSet', pettygrove)
-    lukedataset = create_experiment('LukeDataSet', luke)
-
-
-
+    #pettygrovedataset = create_experiment('PettygroveDataSet', pettygrove)
+    #lukedataset = create_experiment('LukeDataSet', luke)
 
     # set camilleri data
     # TODO: decide if this is a good abstraction
@@ -65,116 +70,132 @@ def create_data():
             ('data/ImageData/CamilleriDataSet/example co-culture biofilm-LC', 'xlsx'),
         )
     )
+    init_experiment(
+        'Franco',
+        'FrancoDataSet',
+        (
+            ('data/ImageData/FrancoDataSet/EAL-10230x', 'png'),
+            ('data/ImageData/FrancoDataSet/EAL-23000x', 'png'),
+            ('data/ImageData/FrancoDataSet/EDL-1430x', 'png'),
+            ('data/ImageData/FrancoDataSet/EDL-17700x', 'png'),
+        )
+    )
+    init_experiment(
+        'Pettygrove',
+        'PettygroveDataSet',
+        (
+            ('data/ImageData/PettygroveDataSet/11-16-2017/CFU Counts 11-16','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Experiment','lif'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Growth Data 11-16 v2','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Growth Data 11-16','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Patrol Data 11-16','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 1','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 2','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 3','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 4','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 5','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 5','xls'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 6','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 6','xls'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 7','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 7','xls'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 8 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Pos 8','avi'),
+            ('data/ImageData/PettygroveDataSet/11-16-2017/Speed Data 11-16-2017','xlsx'),
+            ######################################################
+            ('data/ImageData/PettygroveDataSet/11-28-2017/CFU Counts 11-28','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Experiment','lif'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Growth Data 11-28','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Patrol Data 11-28','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 1','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 2','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 3','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 4','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 5','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 5 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 5','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 6','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 6 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 6','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 7','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 7','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 7 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 8 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 8','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 8','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Speed Data 11-28-2017','xlsx'),
+            #################################################################
+            ('data/ImageData/PettygroveDataSet/12-5-2017/CFU Counts 12-5','xlsx'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Experiment','lif'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Growth Data 12-5-2017','xlsx'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Patrol Data 12-5-2017','xlsx'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 1','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 2','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 3','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 4','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 5','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 5 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 5 Green','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 6','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 6 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 6 Green','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 7','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 7 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 7 Green','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 8','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 8 Gray','avi'),
+            ('data/ImageData/PettygroveDataSet/12-5-2017/Pos 8 Green','avi'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 5','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 6','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 7','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Pos 8','xls'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Speed Data 12-5-2017','xlsx'),
+            ('data/ImageData/PettygroveDataSet/11-28-2017/Tile Data 12-5-2017','xlsx'),
+        )
+    )
+
+    init_experiment(
+        'Luke',
+        'LukeDataSet',
+        (
+            ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R1','fastq'),
+            ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R2','fastq'),
+            ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R2.fastq','zip'),
+            ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-READ_IDs.cPickle','z'),
+            ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-STATS','txt'),
+            ('data/OmicsData/LukeDataset/LargeMetagenome/ziSWHTdA','unknown'),
+            ###########################################
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_a','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_b','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_c','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_d','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_e','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_f','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_g','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_h','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_i','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_j','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_k','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_l','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_m','tif'),
+            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_n','tif'),
+            ################################################
+            ('data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R1_001','fastq'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001','fastq'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R1_001.fastq','gz'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001.fastq','gz'),
+
+            ('data/OmicsData/LukeDataset/SmallMetagenome/R1_pe','unknown'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/R1_se','unknown'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/R2_pe','unknown'),
+            ('data/OmicsData/LukeDataset/SmallMetagenome/R1_se','unknown'),
+
+        )
+    )
 
 
-    file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EAL-10230x", mimetype = 'Image', mimetype_type = 'png')
-    file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EAL-23000x", mimetype = 'Image', mimetype_type = 'png')
-    file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EDL-1430x", mimetype = 'Image', mimetype_type = 'png')
-    file = Files.objects.create(experiment_ID = francodataset, path = "data/ImageData/FrancoDataSet/EDL-17700x", mimetype = 'Image', mimetype_type = 'png')
 
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/CFU Counts 11-16", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Experiment", mimetype = 'Text', mimetype_type = 'lif')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Growth Data 11-16 v2", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Growth Data 11-16", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Patrol Data 11-16", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 1", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 2", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 3", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 4", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 5", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 5", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 6", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 6", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 7", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 7", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 8 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Pos 8", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-16-2017/Speed Data 11-16-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-    ######################################################
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/CFU Counts 11-28", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Experiment", mimetype = 'Text', mimetype_type = 'lif')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Growth Data 11-28", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Patrol Data 11-28", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 1", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 2", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 3", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 4", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 5", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 5 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 5", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 6", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 6 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 6", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 7", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 7", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 7 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 8 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 8", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 8", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Speed Data 11-28-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-    #################################################################
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/CFU Counts 12-5", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Experiment", mimetype = 'Text', mimetype_type = 'lif')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Growth Data 12-5-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Patrol Data 12-5-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 1", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 2", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 3", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 4", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 5", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 5 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 5 Green", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 6", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 6 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 6 Green", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 7", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 7 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 7 Green", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 8", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 8 Gray", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/12-5-2017/Pos 8 Green", mimetype = 'Video', mimetype_type = 'avi')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 5", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 6", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 7", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Pos 8", mimetype = 'Text', mimetype_type = 'xls')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Speed Data 12-5-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-    file = Files.objects.create(experiment_ID = pettygrovedataset, path = "data/ImageData/PettygroveDataSet/11-28-2017/Tile Data 12-5-2017", mimetype = 'Text', mimetype_type = 'xlsx')
-
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R1", mimetype = 'Text', mimetype_type = 'fastq')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R2", mimetype = 'Text', mimetype_type = 'fastq')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/PKF9-QUALITY_PASSED_R2.fastq", mimetype = 'unknown', mimetype_type = 'zip')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/PKF9-READ_IDs.cPickle", mimetype = 'Text', mimetype_type = 'z')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/PKF9-STATS", mimetype = 'Text', mimetype_type = 'txt')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/LargeMetagenome/ziSWHTdA", mimetype = 'unknown', mimetype_type = 'unknown')
-    ###########################################
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_a", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_b", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_c", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_d", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_e", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_f", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_g", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_h", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_i", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_j", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_k", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_l", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_m", mimetype = 'Image', mimetype_type = 'tif')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_n", mimetype = 'Image', mimetype_type = 'tif')
-    ################################################
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R1_001", mimetype = 'Text', mimetype_type = 'fastq')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001", mimetype = 'Text', mimetype_type = 'fastq')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R1_001.fastq", mimetype = 'unknown', mimetype_type = 'gz')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/13_S1_L001_R2_001.fastq", mimetype = 'unknown', mimetype_type = 'gz')
-
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_pe", mimetype = 'unknown', mimetype_type = 'unknown')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_se", mimetype = 'unknown', mimetype_type = 'unknown')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R2_pe", mimetype = 'unknown', mimetype_type = 'unknown')
-    file = Files.objects.create(experiment_ID = lukedataset, path = "data/OmicsData/LukeDataset/SmallMetagenome/R1_se", mimetype = 'unknown', mimetype_type = 'unknown')
-
-
-
-    c_subt = create_file(
+"""     c_subt = create_file(
         lukedataset,
         'data/OmicsData/LukeDataset/SmallMetagenome/Csubt_wholegenome',
         'unknown')
@@ -197,7 +218,7 @@ def create_data():
         number_of_C=433130 ,
         number_of_G=434571,
         number_of_T=444338,
-        text_file_ID=m_thermo)
+        text_file_ID=m_thermo) """
 
 def view():
     print(Author.objects.all())
