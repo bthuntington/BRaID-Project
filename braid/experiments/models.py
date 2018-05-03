@@ -8,8 +8,8 @@ class Author(models.Model):
         return self.first_name
 
 class Experiment(models.Model):
-    experiment_name = models.CharField(max_length = 100)
-    conditions = models.CharField(max_length = 1000, null = True)
+    name = models.CharField(max_length = 100)
+    condition = models.CharField(max_length = 1000, null = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
 class File(models.Model):

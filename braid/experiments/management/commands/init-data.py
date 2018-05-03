@@ -1,13 +1,15 @@
 from django.core.management.base import BaseCommand
 
-from experiments.models import Author, Experiments, Files, ImageFeatures, TextFeatures
+from experiments.models import (
+    Author, Experiment, File, ImageFeature, TextFeature
+)
 
 def clean_db():
     Author.objects.all().delete()
-    Experiments.objects.all().delete()
-    Files.objects.all().delete()
-    ImageFeatures.objects.all().delete()
-    TextFeatures.objects.all().delete()
+    Experiment.objects.all().delete()
+    File.objects.all().delete()
+    ImageFeature.objects.all().delete()
+    TextFeature.objects.all().delete()
 
 # do I need to do this or is there already a library??
 MIME_TYPES = {
@@ -35,33 +37,49 @@ def create_authors(first_names):
 
 
 def create_experiment(name, author):
-    return Experiments.objects.create(experiment_name=name, author_ID=author)
+    return Experiment.objects.create(name=name, author=author)
 
 
 def create_file(experiment, path, mimetype_type):
-    return Files.objects.create(
-        experiment_ID=experiment,
+    return File.objects.create(
+        experiment=experiment,
         path=path,
         mimetype=MIME_TYPES[mimetype_type],
         mimetype_type=mimetype_type)
 
 
-def init_experiment(author_name, experiment_name, data):
+def create_genome_file(experiment, path, mimetype_type,
+                       num_A, num_C, num_G, num_T):
+    f = create_file(experiment, path, mimetype_type)
+    TextFeature.objects.create(
+        number_of_A=num_A,
+        number_of_C=num_C,
+        number_of_G=num_G,
+        number_of_T=num_T,
+        text_file=f)
+    return f
+
+
+def create_image_file(experiment, path, mimetype_type,
+                      bin0, bin50, bin100, bin150, bin200):
+    f = create_file(experiment, path, mimetype_type)
+    ImageFeature.objects.create(
+        upto_fifty=bin0,
+        fifty_to_hundred=bin50,
+        hundred_to_one_fifty=bin100,
+        one_fifty_to_two_hundred=bin150,
+        two_hundred_to_two_fifty_five=bin200,
+        image_file=f)
+    return f
+
+def init_experiment(author_name, name, data):
     author = create_author(author_name)
-    experiment = create_experiment(experiment_name, author)
+    experiment = create_experiment(name, author)
     for entry in data:
         f = create_file(experiment, entry[0], entry[1])
-        # TODO: can I do feature extraction here? create_features(...)
+    return author, experiment
 
 def create_data():
-    #author_names = ['Pettygrove', 'Luke']
-    #(pettygrove, luke) = create_authors(author_names)
-
-    #pettygrovedataset = create_experiment('PettygroveDataSet', pettygrove)
-    #lukedataset = create_experiment('LukeDataSet', luke)
-
-    # set camilleri data
-    # TODO: decide if this is a good abstraction
     init_experiment(
         'Camilleri',
         'CamilleriDataSet',
@@ -154,7 +172,7 @@ def create_data():
         )
     )
 
-    init_experiment(
+    (luke, luke_experiment) = init_experiment(
         'Luke',
         'LukeDataSet',
         (
@@ -165,8 +183,6 @@ def create_data():
             ('data/OmicsData/LukeDataset/LargeMetagenome/PKF9-STATS','txt'),
             ('data/OmicsData/LukeDataset/LargeMetagenome/ziSWHTdA','unknown'),
             ###########################################
-            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_a','tif'),
-            ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_b','tif'),
             ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_c','tif'),
             ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_d','tif'),
             ('data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_e','tif'),
@@ -193,37 +209,51 @@ def create_data():
         )
     )
 
-
-
-"""     c_subt = create_file(
-        lukedataset,
+    # create some text features
+    create_genome_file(
+        luke_experiment,
         'data/OmicsData/LukeDataset/SmallMetagenome/Csubt_wholegenome',
-        'unknown')
-    m_thermo = create_file(
-        lukedataset,
+        'unknown',
+        num_A = 837918,
+        num_C = 505786,
+        num_G = 504663 ,
+        num_T = 841082)
+
+    create_genome_file(
+        luke_experiment,
         'data/OmicsData/LukeDataset/SmallMetagenome/Mthermo_wholegenome',
-        'unknown')
+        'unknown',
+        num_A=439339,
+        num_C=433130 ,
+        num_G=434571,
+        num_T=444338)
 
+    # create some image features
+    create_image_file(
+        luke_experiment,
+        'data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_a',
+        'tif',
+        bin0=202303 ,
+        bin50=104534,
+        bin100=44775,
+        bin150=23009,
+        bin200=9871)
 
+    create_image_file(
+        luke_experiment,
+        'data/OmicsData/LukeDataset/SEMImages/LM_Culture_2_2017_b',
+        'tif',
+        bin0=202303,
+        bin50=104534,
+        bin100=44775,
+        bin150=23009,
+        bin200=9871)
 
-    TextFeatures.objects.create(
-        number_of_A = 837918,
-        number_of_C = 505786,
-        number_of_G = 504663 ,
-        number_of_T = 841082,
-        text_file_ID=c_subt)
-
-    TextFeatures.objects.create(
-        number_of_A=439339,
-        number_of_C=433130 ,
-        number_of_G=434571,
-        number_of_T=444338,
-        text_file_ID=m_thermo) """
 
 def view():
     print(Author.objects.all())
-    print(Experiments.objects.all())
-    print(Files.objects.all())
+    print(Experiment.objects.all())
+    print(File.objects.all())
 
 
 class Command(BaseCommand):
@@ -233,21 +263,3 @@ class Command(BaseCommand):
         view()
 
 
- ###########################################################
-
-#
-# #done on LukeDataSet smallmetagenome
-# #####################################################################
-# fileA = Files.objects.get(pk = 9)
-# fileB = Files.objects.get(pk = 10)
-# fileC = Files.objects.get(pk = 11)
-# fileD = Files.objects.get(pk = 12)
-# file2 = imageFeatures(uptoFifty = 202303 , fiftyToHundred = 104534, hundredToOneFifty = 44775 , oneFiftyToTwoHundred=23009, twoHundredToTwoFiftyFive = 9871, imageFileID = fileA)
-# file2.save()
-# file3 = imageFeatures(uptoFifty = 257836, fiftyToHundred =  54207, hundredToOneFifty =  27406 , oneFiftyToTwoHundred = 17229, twoHundredToTwoFiftyFive =  10867, imageFileID = fileB)
-# file3.save()
-# file4 = imageFeatures(uptoFifty = 121029 , fiftyToHundred = 199729, hundredToOneFifty =  58192, oneFiftyToTwoHundred =  5234, twoHundredToTwoFiftyFive= 308, imageFileID = fileC)
-# file4.save()
-# file5 = imageFeatures(uptoFifty = 177237, fiftyToHundred = 95153 , hundredToOneFifty = 65569 , oneFiftyToTwoHundred = 27916, twoHundredToTwoFiftyFive =  3044, imageFileID = fileD)
-# file5.save()
-# #done on FrancoDataSet
