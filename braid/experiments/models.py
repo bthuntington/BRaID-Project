@@ -7,12 +7,12 @@ class Author(models.Model):
     def __str__(self):
         return self.first_name
 
-class Experiments(models.Model):
+class Experiment(models.Model):
     experiment_name = models.CharField(max_length = 100)
     conditions = models.CharField(max_length = 1000, null = True)
-    author_ID = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
-class Files(models.Model):
+class File(models.Model):
     MIMETYPE = (
         ('Audio', 'Audio'),
         ('Video', 'Video'),
@@ -34,7 +34,7 @@ class Files(models.Model):
         ('unknown', 'unknown'),
     )
 
-    experiment_ID = models.ForeignKey(Experiments, on_delete=models.CASCADE)
+    experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
     path = models.CharField(max_length=100)
     mimetype = models.CharField(
         choices=MIMETYPE, max_length=20, default='Text'
@@ -44,17 +44,17 @@ class Files(models.Model):
     )
 
 
-class TextFeatures(models.Model):
+class TextFeature(models.Model):
     number_of_A = models.IntegerField()
     number_of_C = models.IntegerField()
     number_of_G = models.IntegerField()
     number_of_T = models.IntegerField()
-    text_file_ID = models.ForeignKey(Files, on_delete=models.CASCADE)
+    text_file = models.ForeignKey(File, on_delete=models.CASCADE)
 
-class ImageFeatures(models.Model):
+class ImageFeature(models.Model):
     upto_fifty = models.IntegerField()
     fifty_to_hundred = models.IntegerField()
     hundred_to_one_fifty = models.IntegerField()
     one_fifty_to_two_hundred = models.IntegerField()
     two_hundred_to_two_fifty_five = models.IntegerField()
-    image_file_ID = models.ForeignKey(Files, on_delete=models.CASCADE)
+    image_file = models.ForeignKey(File, on_delete=models.CASCADE)
