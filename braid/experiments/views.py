@@ -8,7 +8,17 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            file_model = form.save()
+            file_model = form.save(commit=False)
+            # automatically add path
+            file_model.path = file_model.file_file.path
+           
+            # adds full path from root on computer
+            #print("File path: %s" % (file_model.path))
+
+            # Save to model
+            file_model.save()
+
+            # TODO: Change to more meaningful page
             return HttpResponse("Valid form. File commited.")
     else:
         form = UploadFileForm()
