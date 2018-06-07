@@ -42,6 +42,11 @@ class File(models.Model):
     mimetype_type = models.CharField(
         choices=MIMETYPE_TYPE, max_length=20, default='txt'
     )
+    file_name = models.CharField(max_length=100)
+    file_description = models.CharField(max_length=500)
+    # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
+    file_file = models.FileField()
+
 
 
 class TextFeature(models.Model):
