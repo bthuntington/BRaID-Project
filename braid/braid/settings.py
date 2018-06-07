@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 from decouple import config
 from unipath import Path
 import dj_database_url
+import os
 
 PROJECT_DIR = Path(__file__).parent
 
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'experiments',
+    'experiments.apps.ExperimentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +120,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# MEDIA_ROOT: computer dir location
+# MEDIA_URL = browser reletive location
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'files')
+MEDIA_URL = '/files/'
