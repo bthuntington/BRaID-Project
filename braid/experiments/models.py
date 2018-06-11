@@ -28,6 +28,7 @@ class File(models.Model):
         ('mp4', 'mp4'),
         ('tif', 'tif'),
         ('avi', 'avi'),
+        ('fasta', 'fasta'),
         ('txt', 'txt'),
         ('csv', 'csv'),
         ('xls', 'xls'),
