@@ -41,17 +41,22 @@ def upload_file(request):
                 text_type = is_text(file_model.path)
                 if (text_type, text_type) in file_model.MIMETYPE_TYPE:
                     file_model.mimetype_type = text_type
+            elif 'jpeg' in mimetype_type:
+                # catch images where jpeg not jpg
+                file_model.mimetype_type = 'jpg'
             else:
                 file_model.mimetype_type = 'unknown'
 
-            print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: \
-                    {} \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
-                  \n\tfile: {}".format(file_model.experiment, file_model.path,
-                                       file_model.mimetype,
-                                       file_model.mimetype_type,
-                                       file_model.file_name,
-                                       file_model.file_description,
-                                       file_model.file_file))
+            """
+            print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
+                \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
+                \n\tfile: {}".format(file_model.experiment, file_model.path,
+                                     file_model.mimetype,
+                                     file_model.mimetype_type,
+                                     file_model.file_name,
+                                     file_model.file_description,
+                                     file_model.file_file))
+            """
 
             # Save to model
             file_model.save()
