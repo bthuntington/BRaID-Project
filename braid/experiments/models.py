@@ -1,5 +1,6 @@
 from django.db import models
-
+#from django.db.models import singals
+from django.dispatch import receiver
 class Author(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20, null = True)
@@ -48,7 +49,17 @@ class File(models.Model):
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
     file_file = models.FileField()
 
+    def print_data(self):
 
+        print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
+            \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
+            \n\tfile: {}".format(self.experiment, self.path, self.mimetype,
+                                 self.mimetype_type, self.file_name,
+                                 self.file_description, self.file_file))
+
+@receiver(models.signals.post_delete, sender=File)
+def post_delete_file(sender, instance, *args, **kwargs):
+    instance.file_file.delete(save=False)
 
 class TextFeature(models.Model):
     number_of_A = models.IntegerField()
