@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .forms import UploadFileForm
 from django.http import HttpResponse
-from braid.settings import MEDIA_ROOT
 import magic
 from Bio import SeqIO
 
@@ -13,19 +12,19 @@ def upload_file(request):
         if form.is_valid():
             file_model = form.save(commit=False)
 
-            # read in file in chunk
-            handle_uploaded_file(request.FILES['file_file'])
-
             # automatically add path
             file_model.path = file_model.file_file.path
 
             # automatically get file name
             file_model.file_name = file_model.file_file.name
 
-            # get file mimetype/mimetype type
-            magic_mimetype = magic.from_file(file_model.path, mime=True)
+            # find temporary path to work with
+            temp_path = request.FILES['file_file'].temporary_file_path()
 
+            # get file mimetype/mimetype type
+            magic_mimetype = magic.from_file(temp_path, mime=True)
             mimetype = magic_mimetype.split('/')[0].capitalize()
+
             # check if mimetype matches a known mimetype
             if (mimetype, mimetype) in file_model.MIMETYPE:
                 file_model.mimetype = mimetype
@@ -38,7 +37,7 @@ def upload_file(request):
                 file_model.mimetype_type = mimetype_type
             elif 'text' in file_model.mimetype.lower():
                 # check for other type text if necessary
-                text_type = is_text(file_model.path)
+                text_type = is_text(temp_path)
                 if (text_type, text_type) in file_model.MIMETYPE_TYPE:
                     file_model.mimetype_type = text_type
             elif 'jpeg' in mimetype_type:
@@ -46,7 +45,6 @@ def upload_file(request):
                 file_model.mimetype_type = 'jpg'
             else:
                 file_model.mimetype_type = 'unknown'
-
             """
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
                 \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
@@ -67,13 +65,6 @@ def upload_file(request):
         form = UploadFileForm()
     # TODO: spot for testing request returns what it's supposed to
     return render(request, 'experiments/upload_file.html', {'form': form})
-
-
-# write file in chuncks, not all at once
-def handle_uploaded_file(new_file):
-    with open(MEDIA_ROOT + '/' + new_file.name, 'wb+') as destination:
-        for chunk in new_file.chunks():
-            destination.write(chunk)
 
 
 def is_text(path):
