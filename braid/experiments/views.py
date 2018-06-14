@@ -37,15 +37,19 @@ def upload_file(request):
                 file_model.mimetype_type = mimetype_type
             elif 'text' in file_model.mimetype.lower():
                 # check for other type text if necessary
-                text_type = is_text(temp_path)
-                if (text_type, text_type) in file_model.MIMETYPE_TYPE:
-                    file_model.mimetype_type = text_type
+                if 'plain' in mimetype_type:
+                    text_type = is_plain_text(temp_path)
+                    if (text_type, text_type) in file_model.MIMETYPE_TYPE:
+                        file_model.mimetype_type = text_type
+                # unknown text type to database
+                else:
+                    file_model.mimetype_type = 'unknown'
             elif 'jpeg' in mimetype_type:
                 # catch images where jpeg not jpg
                 file_model.mimetype_type = 'jpg'
             else:
                 file_model.mimetype_type = 'unknown'
-            """
+
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
                 \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
                 \n\tfile: {}".format(file_model.experiment, file_model.path,
@@ -54,7 +58,6 @@ def upload_file(request):
                                      file_model.file_name,
                                      file_model.file_description,
                                      file_model.file_file))
-            """
 
             # Save to model
             file_model.save()
@@ -67,15 +70,21 @@ def upload_file(request):
     return render(request, 'experiments/upload_file.html', {'form': form})
 
 
-def is_text(path):
-    mimetype_type = str()
+def is_plain_text(path):
+    mimetype_type = 'unknown'
 
-    # check other text mimetype types
-    if check_if_fasta(path):
-        mimetype_type = "fasta"
-    else:
-        # default is txt
-        mimetype_type = "txt"
+    # 'extension' : (MIMETYPE_TYPE, boolean to verify extension)
+    is_type = {'.csv': ('csv', True), '.txt': ('txt', True),
+               '.fasta': ('fasta', check_if_fasta(path))}
+
+    # get file extension, assume follows last .
+    if len(path.split('.')) > 1:
+        extension = '.' + path.split('.')[-1].lower()
+
+    # determine if it is a known extension
+    if extension in is_type:
+        if is_type[extension][1]:
+            mimetype_type = is_type[extension][0]
 
     return mimetype_type
 
