@@ -1,8 +1,17 @@
 from django.shortcuts import render
 from .forms import UploadFileForm
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import generic
+from .models import File
 import magic
 from Bio import SeqIO
+
+
+# Show information and give options once upload complete
+class UploadSuccessView(generic.DetailView):
+    model = File
+    template_name = 'experiments/upload_success.html'
 
 
 # view to upload files, uses UploadFileForm
@@ -50,6 +59,7 @@ def upload_file(request):
             else:
                 file_model.mimetype_type = 'unknown'
 
+            """
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
                 \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
                 \n\tfile: {}".format(file_model.experiment, file_model.path,
@@ -58,12 +68,15 @@ def upload_file(request):
                                      file_model.file_name,
                                      file_model.file_description,
                                      file_model.file_file))
+            """
 
             # Save to model
             file_model.save()
 
-            # TODO: Change to more meaningful page
-            return HttpResponse("Valid form. File commited.")
+            # easier when testing file upload
+            # return HttpResponse("Valid form. File commited.")
+            return HttpResponseRedirect(reverse('experiments:success',
+                                                args=(file_model.id,)))
     else:
         form = UploadFileForm()
     # TODO: spot for testing request returns what it's supposed to
