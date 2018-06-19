@@ -8,4 +8,7 @@ urlpatterns = [
     # view file upload info
     path('<int:pk>/success/', views.UploadSuccessView.as_view(),
          name='success'),
+    # load when running analysis
+    path('<int:pk>/analysis/', views.RunAnalysisView.as_view(),
+         name='analysis_info'),
 ]
