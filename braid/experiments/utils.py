@@ -1,7 +1,9 @@
 # model analysis controls
 def set_analysis_options(file_type):
-    type_list = []
+    type_list = 'no analysis'
+    list_content = []
     if 'csv' in file_type.lower():
-        type_list = ['Bayesian Network', 'None']
+        list_content = ['Bayesian Network']
+        type_list = 'csv'
 
-    return type_list
+    return list_content, type_list

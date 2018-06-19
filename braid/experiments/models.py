@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from . import utils
+from django.urls import reverse
 
 class Author(models.Model):
     first_name = models.CharField(max_length=20)
@@ -15,10 +16,12 @@ class Experiment(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
 class Analysis(models.Model):
-    analysis_type = models.CharField(max_length=30)
+    analysis_option = models.CharField(max_length=30)
+    analysis_type = models.CharField(max_length=10)
+    parent_file_id = models.IntegerField()
 
     def __str__(self):
-        return self.analysis_type
+        return self.analysis_option
 
 
 class File(models.Model):
@@ -44,6 +47,13 @@ class File(models.Model):
         ('unknown', 'unknown'),
     )
 
+    ANALYSIS_TYPE=(
+        ('csv', (
+            ('BN', 'Bayesian Network'),
+            )
+        ),
+    )
+
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
     path = models.CharField(max_length=100)
     mimetype = models.CharField(
@@ -56,14 +66,18 @@ class File(models.Model):
     file_description = models.CharField(max_length=500)
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
     file_file = models.FileField()
-    analysis_information = models.ManyToManyField(Analysis)
+    analysis_information = models.ManyToManyField(Analysis, blank=True)
 
     def get_analysis_types(self):
-        types = utils.set_analysis_options(self.mimetype_type)
-        for t in types:
-            temp_analysis = Analysis(analysis_type=t)
+        content,type_list = utils.set_analysis_options(self.mimetype_type)
+        for t in content:
+            temp_analysis = Analysis(analysis_option=t,analysis_type=type_list,
+                                     parent_file_id=self.pk)
             temp_analysis.save()
             self.analysis_information.add(temp_analysis)
+
+    def get_absolute_url(self):
+        return reverse('experiments:analysis_info', kwargs={'pk': self.pk})
 
     def print_data(self):
 
@@ -72,6 +86,7 @@ class File(models.Model):
             \n\tfile: {}".format(self.experiment, self.path, self.mimetype,
                                  self.mimetype_type, self.file_name,
                                  self.file_description, self.file_file))
+
 @receiver(models.signals.post_delete, sender=File)
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.file_file.delete(save=False)
