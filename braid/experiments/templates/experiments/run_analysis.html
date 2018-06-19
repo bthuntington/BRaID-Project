@@ -1,1 +1,10 @@
-<h1> Analysis on {{ file.file_name }} </h1>
+<h2> Analysis for {{ file.file_name }} </h2>
+{% if file.analysis_information.all.count > 0 %}
+    <ul>
+        {% for info in file.analysis_information.all %}
+            <li> {{ info }} </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <pi style="margin-left: 40px"> There were no analysis run on this file. </p>
+{% endif %}
