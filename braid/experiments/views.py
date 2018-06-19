@@ -1,16 +1,17 @@
 from django.shortcuts import render
-from .forms import UploadFileForm
+from .forms import UploadFileForm, FileAnalysisForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views import generic
+from django.views.generic.edit import UpdateView
 from .models import File
 import magic
 from Bio import SeqIO
 
 
 # Show information and give options once upload complete
-class UploadSuccessView(generic.DetailView):
+class UploadSuccessView(UpdateView):
     model = File
+    form_class = FileAnalysisForm
     template_name = 'experiments/upload_success.html'
 
 
@@ -59,6 +60,7 @@ def upload_file(request):
             else:
                 file_model.mimetype_type = 'unknown'
 
+            file_model.get_analysis_types()
             """
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
                 \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\

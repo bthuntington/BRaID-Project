@@ -5,3 +5,13 @@
     <li><b> Description:</b> {{ file.file_description }} </li>
     <li><b> Mimetype/subtype:</b> {{ file.mimetype }}/{{ file.mimetype_type }} </li>
 </ul>
+
+{% block content %}
+        <h2> Choose desired file analysis </h2>
+        <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" />
+        </from>
+{% endblock %}
+
