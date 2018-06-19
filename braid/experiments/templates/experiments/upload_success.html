@@ -7,11 +7,15 @@
 </ul>
 
 {% block content %}
-        <h2> Choose desired file analysis </h2>
-        <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Submit" />
-        </from>
+    <h2> Choose desired file analysis </h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if file.analysis_information.all.count > 0 %}         
+            {{ form.as_p }}
+        {% else %}
+            <p> Your file has no avaliable analysis options. </p>
+        {% endif %}
+        <input type="submit" value="Continue" />
+    </form>
 {% endblock %}
 
