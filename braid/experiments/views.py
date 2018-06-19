@@ -2,10 +2,16 @@ from django.shortcuts import render
 from .forms import UploadFileForm, FileAnalysisForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
 from .models import File
 import magic
 from Bio import SeqIO
+
+
+class RunAnalysisView(DetailView):
+    model = File
+    template_name = 'experiments/run_analysis.html'
 
 
 # Show information and give options once upload complete
