@@ -15,15 +15,6 @@ class Experiment(models.Model):
     condition = models.CharField(max_length = 1000, null = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
-class Analysis(models.Model):
-    analysis_option = models.CharField(max_length=30)
-    analysis_type = models.CharField(max_length=10)
-    parent_file_id = models.IntegerField()
-
-    def __str__(self):
-        return self.analysis_option
-
-
 class File(models.Model):
     MIMETYPE = (
         ('Audio', 'Audio'),
@@ -97,18 +88,3 @@ class File(models.Model):
 @receiver(models.signals.post_delete, sender=File)
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.file_file.delete(save=False)
-
-class TextFeature(models.Model):
-    number_of_A = models.IntegerField()
-    number_of_C = models.IntegerField()
-    number_of_G = models.IntegerField()
-    number_of_T = models.IntegerField()
-    text_file = models.ForeignKey(File, on_delete=models.CASCADE)
-
-class ImageFeature(models.Model):
-    upto_fifty = models.IntegerField()
-    fifty_to_hundred = models.IntegerField()
-    hundred_to_one_fifty = models.IntegerField()
-    one_fifty_to_two_hundred = models.IntegerField()
-    two_hundred_to_two_fifty_five = models.IntegerField()
-    image_file = models.ForeignKey(File, on_delete=models.CASCADE)
