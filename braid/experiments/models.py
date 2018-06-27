@@ -47,28 +47,21 @@ class File(models.Model):
         ('unknown', 'unknown'),
     )
 
-    ANALYSIS_TYPE=(
-        ('csv', (
-            ('BN', 'Bayesian Network'),
-            )
-        ),
-    )
-
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
-    path = models.CharField(max_length=100)
     mimetype = models.CharField(
         choices=MIMETYPE, max_length=20, default='Text'
     )
     mimetype_type = models.CharField(
         choices=MIMETYPE_TYPE, max_length=20, default='txt'
     )
-    file_name = models.CharField(max_length=100)
-    file_description = models.CharField(max_length=500)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=500)
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
     file_file = models.FileField()
-    analysis_information = models.ManyToManyField(Analysis, blank=True)
 
     def get_analysis_types(self):
+        # TODO: Change structure analysis are stored in
+        """
         content,type_list = utils.set_analysis_options(self.mimetype_type)
         for t in content:
 
@@ -88,7 +81,8 @@ class File(models.Model):
                 temp_analysis.save()
 
             self.analysis_information.add(temp_analysis)
-
+        """
+        pass
     def get_absolute_url(self):
         return reverse('experiments:analysis_info', kwargs={'pk': self.pk})
 
@@ -97,7 +91,7 @@ class File(models.Model):
         print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
             \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
             \n\tfile: {}".format(self.experiment, self.path, self.mimetype,
-                                 self.mimetype_type, self.file_name,
+                                 self.mimetype_type, self.name,
                                  self.file_description, self.file_file))
 
 @receiver(models.signals.post_delete, sender=File)
