@@ -4,13 +4,15 @@ import magic
 
 # model analysis controls
 def set_analysis_options(file_type):
+    # TODO: Make dictionary to control what is assigned
+    # mimetype_type will be key, analysis will be
     type_list = 'no analysis'
     list_content = []
     if 'csv' in file_type.lower():
         list_content = ['Bayesian Network']
         type_list = 'csv'
 
-    return list_content, type_list
+    return list_content
 
 
 def is_plain_text(path):
