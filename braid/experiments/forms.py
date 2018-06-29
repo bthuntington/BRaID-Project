@@ -1,5 +1,6 @@
 from django import forms
-from .models import File, Analysis
+from .models import File
+#, Analysis
 from django.forms.widgets import CheckboxSelectMultiple
 
 

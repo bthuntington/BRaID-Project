@@ -88,16 +88,15 @@ class File(models.Model):
 @receiver(models.signals.post_delete, sender=File)
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.file_file.delete(save=False)
-                                 
+
 #Tentative models 
 class Feature_BayesianNetwork(models.Model):
-	#files = models.ManyToManyField(Experiment)
+	files = models.ManyToManyField(Experiment)
 	#network_file = models.ForeignKey(File, on_delete=models.CASCADE)
 	upload = models.FileField(upload_to='uploads/')
 	
 class Feature_FrequentedRegions:
 	files = models.ManyToManyField(Experiment)
-
 
     
     
