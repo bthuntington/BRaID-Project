@@ -1,7 +1,7 @@
 from django import forms
 from .models import File
 from django.forms.widgets import CheckboxSelectMultiple
-
+from . import utils
 
 class UploadFileForm(forms.ModelForm):
 
@@ -12,7 +12,7 @@ class UploadFileForm(forms.ModelForm):
 
 class PickAnalysisForm(forms.ModelForm):
 
-    OPTIONS = (('ex1', 'example 1'), ('ex2','example 2'))
+    OPTIONS = ()
     selected_analysis = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
     class Meta:
@@ -21,11 +21,14 @@ class PickAnalysisForm(forms.ModelForm):
 
     # TODO: get options relevant to file
     # method not working, with options_list variable in views
-    """
+
     def __init__(self, *args, **kwargs):
         super(PickAnalysisForm, self).__init__(*args, **kwargs)
-        # if potential analysis, add them to user's choices
-        options_list = kwargs.pop['options_list']
+        # get options for file
+        file_type = self.instance.mimetype_type
+        print("The file object is: ", file_type)
+
+        options_list = utils.set_analysis_options(file_type)
         if len(options_list) > 0:
             # build tuple out of choices
             for opt in options_list:
@@ -34,7 +37,6 @@ class PickAnalysisForm(forms.ModelForm):
             # tell user there are no avaliable options
             self.OPTIONS = (('NONE', 'No analysis options'),)
 
-        # reset selected_analysis field with new options
+        # reassign field with new values
         self.fields['selected_analysis'] = forms.MultipleChoiceField(
             widget=forms.CheckboxSelectMultiple, choices=self.OPTIONS)
-    """
