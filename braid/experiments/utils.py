@@ -3,24 +3,12 @@ import magic
 
 
 # model analysis controls
-'''
-def set_analysis_options(file_type):
-    # TODO: Make dictionary to control what is assigned
-    # mimetype_type will be key, analysis will be value
-    type_list = 'no analysis'
-    list_content = []
-    if 'csv' in file_type.lower():
-        list_content = ['Bayesian Network']
-        type_list = 'csv'
-
-    return list_content
-'''
-#Attempt at dictionary
 #check to see if value is in dict and if it is then return value(list)
-
-
 def set_analysis_options(file_type):
-	analysis_dictionary = {'csv' : ("Bayesian Network"), 'txt' : (), 'fasta' : ("Frequented Regions")}
+	analysis_dictionary = {
+	'csv' : [('BN', 'Bayesian Network')], 
+	'fasta' : [('FR', 'Frequented Regions')],
+	}
 	if file_type in analysis_dictionary:
 		return analysis_dictionary[file_type]
 	else:
