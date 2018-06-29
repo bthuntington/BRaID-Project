@@ -50,30 +50,6 @@ class File(models.Model):
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
     file_file = models.FileField()
 
-    def get_analysis_types(self):
-        # TODO: Change structure analysis are stored in
-        """
-        content,type_list = utils.set_analysis_options(self.mimetype_type)
-        for t in content:
-
-            temp_analysis = Analysis.objects.filter(analysis_option=t,
-                                       analysis_type=type_list,
-                                       parent_file_id=self.pk)
-            # no analysis object exists
-            if temp_analysis.count() == 0:
-                # make a new one for this file
-                temp_analysis = Analysis(analysis_option=t,
-                                         analysis_type=type_list,
-                                         parent_file_id=self.pk)
-            else:
-                # TODO: Write test to make sure only one Analysis object is
-                # returned
-                temp_analysis = temp_analysis[0]
-                temp_analysis.save()
-
-            self.analysis_information.add(temp_analysis)
-        """
-        pass
     def get_absolute_url(self):
         return reverse('experiments:analysis_info', kwargs={'pk': self.pk})
 

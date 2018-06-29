@@ -1,5 +1,5 @@
 from django import forms
-from .models import File, Analysis
+from .models import File
 from django.forms.widgets import CheckboxSelectMultiple
 
 
@@ -7,20 +7,20 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = File
-        fields = ['experiment', 'file_file', 'file_description', ]
+        fields = ['experiment', 'file_file', 'description', ]
 
+class PickAnalysisForm(forms.Form):
+    options_list = []
+    def __init__(self,options_list,*args,**kwargs):
+        super(PickAnalysisForm,self).__init__(*args,**kwargs)
+        self.options_list = options_list #kwargs.pop('options_list')
+    OPTIONS = ()
+    if len(options_list) > 0:
+        # build tuple out of choices
+        for opt in options_list:
+           OPTIONS = OPTIONS + (opt,)
+    else:
+        OPTIONS = ('NONE', 'No analysis options')
 
-# TODO: display no analysis message if there are no analysis
-class FileAnalysisForm(forms.models.ModelForm):
-
-    class Meta:
-        model = File
-        fields = ['analysis_information']
-
-    def __init__(self, *args, **kwargs):
-        super(FileAnalysisForm, self).__init__(*args, **kwargs)
-
-        self.fields['analysis_information'].widget = CheckboxSelectMultiple()
-        self.fields['analysis_information'].queryset = Analysis.objects.filter(
-            parent_file_id=self.instance.pk)
-        #self.fields['analysis_information'].required = False
+    selected_analysis = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
