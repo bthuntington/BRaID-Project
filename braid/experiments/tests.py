@@ -1,8 +1,30 @@
-# from django.test import TestCase
+from django.test import TestCase
 from . import models
+import factory
 
 
-def create_test_objects():
-    author_1 = models.Author.objects.create(first_name='Jane', last_name='Doe')
-    models.Experiment.objects.create(name='Test', condition='test',
-                                     author=author_1)
+class CreateAuthorFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Author
+
+    first_name = 'Jane'
+    last_name = 'Doe'
+
+
+class CreateExperimentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Experiment
+
+    name = 'Test'
+    condition = 'test'
+    author = factory.SubFactory(CreateAuthorFactory)
+
+
+# class CreateFileFactory(factory.django.DjangoModelFactory):
+
+# class FileUploadTests(TestCase):
+
+# class FileMimetypeTests(TestCase):
+
+# TODO: Test file mimetypes correctly identified
+# TODO: Test uploaded file has all feilds and saves
