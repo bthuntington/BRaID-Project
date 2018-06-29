@@ -3,9 +3,10 @@ import magic
 
 
 # model analysis controls
+'''
 def set_analysis_options(file_type):
     # TODO: Make dictionary to control what is assigned
-    # mimetype_type will be key, analysis will be
+    # mimetype_type will be key, analysis will be value
     type_list = 'no analysis'
     list_content = []
     if 'csv' in file_type.lower():
@@ -13,6 +14,31 @@ def set_analysis_options(file_type):
         type_list = 'csv'
 
     return list_content
+'''
+#Attempt at dictionary
+#type_dictionary = {mimetype_type: analysis}
+#make analysis type a list so can have multiple
+#dict = {'csv': {'BN'}, fasta : ['FR']}
+#check to see if value is in dict and if it is then return value(list)
+#The only 
+
+
+def set_analysis_options(file_type):
+	analysis_dictionary = {'csv' : ["Bayesian Network", "Frequented Regions"], 'txt' : [], 'fasta' : ["Frequented Regions"]}
+	if 'csv' in file_type.lower():
+		return analysis_dictionary['csv']
+	
+	elif 'txt' in file_type.lower():
+		return analysis_dictionary['txt']
+	elif 'fasta' in file_type.lower():
+		return analysis_dictionary['fasta']
+
+	
+	#If we want to print out- return str(analysis_dictionary)
+	#If we want only the values - return analysis_dictionary.values() 
+	
+
+
 
 
 def is_plain_text(path):

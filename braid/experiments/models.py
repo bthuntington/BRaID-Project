@@ -49,7 +49,7 @@ class File(models.Model):
     description = models.CharField(max_length=500)
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
     file_file = models.FileField()
-
+		
     def get_analysis_types(self):
         # TODO: Change structure analysis are stored in
         """
@@ -84,7 +84,21 @@ class File(models.Model):
             \n\tfile: {}".format(self.experiment, self.path, self.mimetype,
                                  self.mimetype_type, self.name,
                                  self.file_description, self.file_file))
-
+ 
 @receiver(models.signals.post_delete, sender=File)
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.file_file.delete(save=False)
+                                 
+#Tentative models 
+class Feature_BayesianNetwork(models.Model):
+	#files = models.ManyToManyField(Experiment)
+	#network_file = models.ForeignKey(File, on_delete=models.CASCADE)
+	upload = models.FileField(upload_to='uploads/')
+	
+class Feature_FrequentedRegions:
+	files = models.ManyToManyField(Experiment)
+
+
+    
+    
+    
