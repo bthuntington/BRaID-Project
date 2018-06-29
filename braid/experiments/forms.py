@@ -9,18 +9,32 @@ class UploadFileForm(forms.ModelForm):
         model = File
         fields = ['experiment', 'file_file', 'description', ]
 
-class PickAnalysisForm(forms.Form):
-    options_list = []
-    def __init__(self,options_list,*args,**kwargs):
-        super(PickAnalysisForm,self).__init__(*args,**kwargs)
-        self.options_list = options_list #kwargs.pop('options_list')
-    OPTIONS = ()
-    if len(options_list) > 0:
-        # build tuple out of choices
-        for opt in options_list:
-           OPTIONS = OPTIONS + (opt,)
-    else:
-        OPTIONS = ('NONE', 'No analysis options')
 
+class PickAnalysisForm(forms.ModelForm):
+
+    OPTIONS = (('ex1', 'example 1'), ('ex2','example 2'))
     selected_analysis = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple, choices=OPTIONS)
+    class Meta:
+        model = File
+        fields = []
+
+    # TODO: get options relevant to file
+    # method not working, with options_list variable in views
+    """
+    def __init__(self, *args, **kwargs):
+        super(PickAnalysisForm, self).__init__(*args, **kwargs)
+        # if potential analysis, add them to user's choices
+        options_list = kwargs.pop['options_list']
+        if len(options_list) > 0:
+            # build tuple out of choices
+            for opt in options_list:
+                self.OPTIONS = self.OPTIONS + (opt, )
+        else:
+            # tell user there are no avaliable options
+            self.OPTIONS = (('NONE', 'No analysis options'),)
+
+        # reset selected_analysis field with new options
+        self.fields['selected_analysis'] = forms.MultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple, choices=self.OPTIONS)
+    """

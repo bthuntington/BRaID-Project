@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import UploadFileForm, FileAnalysisForm
-from django.http import HttpResponseRedirect
+from .forms import UploadFileForm, PickAnalysisForm
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
@@ -13,12 +13,15 @@ class RunAnalysisView(DetailView):
     template_name = 'experiments/run_analysis.html'
 
 
-# Show information and give options once upload complete
-class UploadSuccessView(UpdateView):
-    model = File
-    form_class = FileAnalysisForm
-    template_name = 'experiments/upload_success.html'
+from django.views.generic import FormView
+from django.views.generic.detail import SingleObjectMixin
 
+class SelectAnalysisView(UpdateView):  # SingleObjectMixin, FormView):
+    template_name = 'experiments/upload_success.html'
+    form_class = PickAnalysisForm
+    model = File
+
+    # TODO: Verify form
 
 # view to upload files, uses UploadFileForm
 def upload_file(request):
@@ -27,25 +30,21 @@ def upload_file(request):
         if form.is_valid():
             file_model = form.save(commit=False)
 
-            # automatically add path
-            file_model.path = file_model.file_file.path
-
             # automatically get file name
-            file_model.file_name = file_model.file_file.name
+            file_model.name = file_model.file_file.name
 
             # find temporary path to work with
             temp_path = request.FILES['file_file'].temporary_file_path()
             file_model.mimetype, file_model.mimetype_type = utils.get_mimetype_fields(
                 temp_path, file_model)
 
-            file_model.get_analysis_types()
             """
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
                 \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
                 \n\tfile: {}".format(file_model.experiment, file_model.path,
                                      file_model.mimetype,
                                      file_model.mimetype_type,
-                                     file_model.file_name,
+                                     file_model.name,
                                      file_model.file_description,
                                      file_model.file_file))
             """
