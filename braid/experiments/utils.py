@@ -20,7 +20,7 @@ def set_analysis_options(file_type):
 
 
 def set_analysis_options(file_type):
-	analysis_dictionary = {'csv' : {"Bayesian Network"}, 'txt' : {}, 'fasta' : {"Frequented Regions"}}
+	analysis_dictionary = {'csv' : ("Bayesian Network"), 'txt' : (), 'fasta' : ("Frequented Regions")}
 	if file_type in analysis_dictionary:
 		return analysis_dictionary[file_type]
 	else:
