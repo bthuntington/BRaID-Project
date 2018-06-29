@@ -16,27 +16,15 @@ def set_analysis_options(file_type):
     return list_content
 '''
 #Attempt at dictionary
-#type_dictionary = {mimetype_type: analysis}
-#make analysis type a list so can have multiple
-#dict = {'csv': {'BN'}, fasta : ['FR']}
 #check to see if value is in dict and if it is then return value(list)
-#The only 
 
 
 def set_analysis_options(file_type):
-	analysis_dictionary = {'csv' : ["Bayesian Network", "Frequented Regions"], 'txt' : [], 'fasta' : ["Frequented Regions"]}
-	if 'csv' in file_type.lower():
-		return analysis_dictionary['csv']
-	
-	elif 'txt' in file_type.lower():
-		return analysis_dictionary['txt']
-	elif 'fasta' in file_type.lower():
-		return analysis_dictionary['fasta']
-
-	
-	#If we want to print out- return str(analysis_dictionary)
-	#If we want only the values - return analysis_dictionary.values() 
-	
+	analysis_dictionary = {'csv' : ("Bayesian Network"), 'txt' : (), 'fasta' : ("Frequented Regions")}
+	if file_type in analysis_dictionary:
+		return analysis_dictionary[file_type]
+	else:
+		return ('None. No Analysis Possible')
 
 
 
