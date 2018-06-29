@@ -6,7 +6,7 @@ urlpatterns = [
     # /experiment/upload-file
     path('upload-file/', views.upload_file, name='upload'),
     # view file upload info
-    path('<int:pk>/success/', views.UploadSuccessView.as_view(),
+    path('<int:pk>/success/', views.SelectAnalysisView.as_view(),
          name='success'),
     # load when running analysis
     path('<int:pk>/analysis/', views.RunAnalysisView.as_view(),
