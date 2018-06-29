@@ -1,20 +1,24 @@
 <h1> Upload sucessful </h1>
 <ul>
-    <li><b> Name:</b> {{ file.file_name }} </li>
+    <li><b> Name:</b> {{ file.name }} </li>
     <li><b> Experiment:</b> {{ file.experiment }} </li>
-    <li><b> Description:</b> {{ file.file_description }} </li>
+    <li><b> Description:</b> {{ file.description }} </li>
     <li><b> Mimetype/subtype:</b> {{ file.mimetype }}/{{ file.mimetype_type }} </li>
 </ul>
 
+<!-- TODO: Form for this will change, modify so will be compatable with new form -->
 {% block content %}
     <h2> Choose desired file analysis </h2>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.as_p }}
+        <!-- TODO: Make an if statement for new list selection form, here or
+            elsewhere 
         {% if file.analysis_information.all.count > 0 %}         
             {{ form.as_p }}
         {% else %}
             <p> Your file has no avaliable analysis options. </p>
-        {% endif %}
+            {% endif %} -->
         <input type="submit" value="Continue" />
     </form>
 {% endblock %}
