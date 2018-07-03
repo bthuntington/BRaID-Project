@@ -13,9 +13,6 @@ class RunAnalysisView(DetailView):
     template_name = 'experiments/run_analysis.html'
 
 
-from django.views.generic import FormView
-from django.views.generic.detail import SingleObjectMixin
-
 class SelectAnalysisView(UpdateView):  # SingleObjectMixin, FormView):
     template_name = 'experiments/upload_success.html'
     form_class = PickAnalysisForm
@@ -23,6 +20,13 @@ class SelectAnalysisView(UpdateView):  # SingleObjectMixin, FormView):
 
     # TODO: Verify form
 
+    def form_valid(self, form):
+        analysis = form.cleaned_data.get('selected_analysis')
+        print("Anlysis to be run include: ", analysis)
+        # utils.make_analysis(analysis)
+        # return super().form_valid(form)
+        return_string = "running analysis: " + str(analysis)
+        return HttpResponse(return_string)
 # view to upload files, uses UploadFileForm
 def upload_file(request):
     if request.method == 'POST':
@@ -31,10 +35,10 @@ def upload_file(request):
             file_model = form.save(commit=False)
 
             # automatically get file name
-            file_model.name = file_model.file_file.name
+            file_model.name = file_model.document.name
 
             # find temporary path to work with
-            temp_path = request.FILES['file_file'].temporary_file_path()
+            temp_path = request.FILES['document'].temporary_file_path()
             file_model.mimetype, file_model.mimetype_type = utils.get_mimetype_fields(
                 temp_path, file_model)
 
@@ -46,7 +50,7 @@ def upload_file(request):
                                      file_model.mimetype_type,
                                      file_model.name,
                                      file_model.file_description,
-                                     file_model.file_file))
+                                     file_model.document))
             """
 
             # Save to model

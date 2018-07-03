@@ -7,7 +7,7 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = File
-        fields = ['experiment', 'file_file', 'description', ]
+        fields = ['experiment', 'document', 'description', ]
 
 
 class PickAnalysisForm(forms.ModelForm):
@@ -26,13 +26,13 @@ class PickAnalysisForm(forms.ModelForm):
         super(PickAnalysisForm, self).__init__(*args, **kwargs)
         # get options for file
         file_type = self.instance.mimetype_type
-        print("The file object is: ", file_type)
 
-        options_list = utils.set_analysis_options(file_type)
+        options_list = utils.set_analysis_options(self.instance.mimetype_type)
         if len(options_list) > 0:
             # build tuple out of choices
             for opt in options_list:
                 self.OPTIONS = self.OPTIONS + (opt, )
+            print("OPtions: ", self.OPTIONS)
         else:
             # tell user there are no avaliable options
             self.OPTIONS = (('NONE', 'No analysis options'),)
