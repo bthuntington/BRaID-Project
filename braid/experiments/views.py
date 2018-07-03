@@ -57,7 +57,7 @@ def upload_file(request):
             file_model.save()
 
             # easier when testing file upload
-            # return HttpResponse("Valid form. File commited.")
+            # return HttpResponse("Valid form. File committed.")
             return HttpResponseRedirect(reverse('experiments:success',
                                                 args=(file_model.id,)))
     else:

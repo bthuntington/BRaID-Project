@@ -8,12 +8,15 @@ class Author(models.Model):
     last_name = models.CharField(max_length=20, null = True)
 
     def __str__(self):
-        return self.first_name
+        return self.last_name
 
 class Experiment(models.Model):
     name = models.CharField(max_length = 100)
     condition = models.CharField(max_length = 1000, null = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class File(models.Model):
     MIMETYPE = (
@@ -65,14 +68,18 @@ class File(models.Model):
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.document.delete(save=False)
 
-#Tentative models
+#Checking If working
 class Feature_BayesianNetwork(models.Model):
-	#files = models.ManyToManyField(Experiment)
-	#network_file = models.ForeignKey(File, on_delete=models.CASCADE)
-	upload = models.FileField(upload_to='uploads/')
+	upload = models.FileField(default=1)
+	experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, default=1)
+	def __str__(self):
+		return self.upload
 
-class Feature_FrequentedRegions:
-	files = models.ManyToManyField(Experiment)
+class Feature_FrequentedRegions(models.Model):
+	FR_files = models.ManyToManyField(Experiment, default=1)
+
+	def __str__(self):
+		return self.FR_files
 
 
 
