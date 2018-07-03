@@ -1,8 +1,12 @@
 {% block content %}
-	<h1> Submit a file </h1>
+	<h1 style="text-decoration: underline;"> Submit a file </h1>
 	<form action = "" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Submit" />
 	</form>
 {% endblock %}
+
+<!-- Alternate Choose File button-->
+		<!--<label for="c">File</label>
+		<input id="c" name="c" type="file" aria-required="true">-->
