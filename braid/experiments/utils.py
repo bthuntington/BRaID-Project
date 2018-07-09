@@ -3,18 +3,16 @@ import magic
 
 
 # model analysis controls
-#check to see if value is in dict and if it is then return value(list)
+# check to see if value is in dict and if it is then return value(list)
 def set_analysis_options(file_type):
 	analysis_dictionary = {
-	'csv' : [('BN', 'Bayesian Network')], 
-	'fasta' : [('FR', 'Frequented Regions')],
+        'csv': ['Bayesian Network'],
+        'fasta': ['Frequented Regions'],
 	}
 	if file_type in analysis_dictionary:
 		return analysis_dictionary[file_type]
 	else:
-		return ('None. No Analysis Possible')
-
-
+		return 'No Analysis Possible'
 
 
 def is_plain_text(path):
