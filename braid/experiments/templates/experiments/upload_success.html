@@ -1,8 +1,9 @@
-<h1> Upload sucessful </h1>
+<h1> Upload successful </h1>
 <ul>
-    <li><b> Name:</b> {{ file.name }} </li>
+    <li><b> File Name:</b> {{ file.name }} </li>
     <li><b> Experiment:</b> {{ file.experiment }} </li>
-    <li><b> Description:</b> {{ file.description }} </li>
+    <li><b> Author:</b> {{ file.experiment.author.first_name}} {{ file.experiment.author.last_name }} </li>
+    <li><b> Short Description:</b> {{ file.description }} </li>
     <li><b> Mimetype/subtype:</b> {{ file.mimetype }}/{{ file.mimetype_type }} </li>
 </ul>
 

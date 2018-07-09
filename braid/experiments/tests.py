@@ -27,4 +27,4 @@ class CreateExperimentFactory(factory.django.DjangoModelFactory):
 # class FileMimetypeTests(TestCase):
 
 # TODO: Test file mimetypes correctly identified
-# TODO: Test uploaded file has all feilds and saves
+# TODO: Test uploaded file has all fields and saves

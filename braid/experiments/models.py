@@ -43,7 +43,7 @@ class File(models.Model):
 
     experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE)
     mimetype = models.CharField(
-        choices=MIMETYPE, max_length=20, default='Text'
+        choices=MIMETYPE, max_length=20, default='txt'
     )
     mimetype_type = models.CharField(
         choices=MIMETYPE_TYPE, max_length=20, default='txt'
@@ -70,16 +70,13 @@ def post_delete_file(sender, instance, *args, **kwargs):
 
 #Checking If working
 class Feature_BayesianNetwork(models.Model):
-	upload = models.FileField(default=1)
-	experiment = models.ForeignKey(Experiment, on_delete=models.CASCADE, default=1)
-	def __str__(self):
-		return self.upload
+	network_file = models.FileField(default=1)
+	BN_files = models.ManyToManyField(File, default=1)
+
 
 class Feature_FrequentedRegions(models.Model):
-	FR_files = models.ManyToManyField(Experiment, default=1)
+	FR_files = models.ManyToManyField(File, default=1)
 
-	def __str__(self):
-		return self.FR_files
 
 
 
