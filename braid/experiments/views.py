@@ -18,15 +18,17 @@ class SelectAnalysisView(UpdateView):  # SingleObjectMixin, FormView):
     form_class = PickAnalysisForm
     model = File
 
-    # TODO: Verify form
-
     def form_valid(self, form):
         analysis = form.cleaned_data.get('selected_analysis')
         print("Anlysis to be run include: ", analysis)
         # utils.make_analysis(analysis)
         # return super().form_valid(form)
+
+        # for now just print out the analysis type
         return_string = "running analysis: " + str(analysis)
         return HttpResponse(return_string)
+
+
 # view to upload files, uses UploadFileForm
 def upload_file(request):
     if request.method == 'POST':
@@ -39,8 +41,8 @@ def upload_file(request):
 
             # find temporary path to work with
             temp_path = request.FILES['document'].temporary_file_path()
-            file_model.mimetype, file_model.mimetype_type = utils.get_mimetype_fields(
-                temp_path, file_model)
+            results = utils.get_mimetype_fields(temp_path, file_model)
+            file_model.mimetype, file_model.mimetype_type = results
 
             """
             print("All info: \n\texperiment: {} \n\tpath: {} \n\tmimetype: {}\
