@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
-from .models import File
 from . import utils
+from .models import File
 
 
 class RunAnalysisView(DetailView):
@@ -41,7 +41,7 @@ def upload_file(request):
 
             # find temporary path to work with
             temp_path = request.FILES['document'].temporary_file_path()
-            results = utils.get_mimetype_fields(temp_path, file_model)
+            results = utils.get_mimetype_fields(temp_path, File)
             file_model.mimetype, file_model.mimetype_type = results
 
             """
