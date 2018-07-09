@@ -73,10 +73,16 @@ class Feature_BayesianNetwork(models.Model):
 	network_file = models.FileField(default=1)
 	BN_files = models.ManyToManyField(File, default=1)
 
+@receiver(models.signals.post_delete, sender=Feature_BayesianNetwork)
+def post_delete_network(sender, instance, *args, **kwargs):
+    instance.network_file.delete(save=False)
+
 
 class Feature_FrequentedRegions(models.Model):
 	FR_files = models.ManyToManyField(File, default=1)
 
+# Check many to many function
+# check network deletes files
 
 
 
