@@ -3,18 +3,16 @@ import magic
 
 
 # model analysis controls
-#check to see if value is in dict and if it is then return value(list)
+# check to see if value is in dict and if it is then return value(list)
 def set_analysis_options(file_type):
 	analysis_dictionary = {
-	'csv' : [('BN', 'Bayesian Network')], 
-	'fasta' : [('FR', 'Frequented Regions')],
+        'csv': ['Bayesian Network'],
+        'fasta': ['Frequented Regions'],
 	}
 	if file_type in analysis_dictionary:
 		return analysis_dictionary[file_type]
 	else:
-		return ('None. No Analysis Possible')
-
-
+		return 'No Analysis Possible'
 
 
 def is_plain_text(path):
@@ -43,7 +41,7 @@ def check_if_fasta(text_file_path):
         return any(SeqIO.parse(handle, "fasta"))
 
 
-def get_mimetype_fields(path, file_model):
+def get_mimetype_fields(path, model):
     # get file mimetype/mimetype type
     magic_mimetype = magic.from_file(path, mime=True)
     mimetype = magic_mimetype.split('/')[0].capitalize()
@@ -52,18 +50,18 @@ def get_mimetype_fields(path, file_model):
     final_mimetype_type = "unknown"
 
     # check if mimetype matches a known mimetype
-    if (mimetype, mimetype) in file_model.MIMETYPE:
+    if (mimetype, mimetype) in model.MIMETYPE:
         final_mimetype = mimetype
 
     mimetype_type = magic_mimetype.split('/')[1].lower()
     # check if type exists in list
-    if (mimetype_type, mimetype_type) in file_model.MIMETYPE_TYPE:
+    if (mimetype_type, mimetype_type) in model.MIMETYPE_TYPE:
         final_mimetype_type = mimetype_type
     elif 'text' in final_mimetype.lower():
         # check for other type text if necessary
         if 'plain' in mimetype_type:
             text_type = is_plain_text(path)
-            if (text_type, text_type) in file_model.MIMETYPE_TYPE:
+            if (text_type, text_type) in model.MIMETYPE_TYPE:
                 final_mimetype_type = text_type
         elif 'jpeg' in mimetype_type:
             # catch images where jpeg not jpg

@@ -51,7 +51,7 @@ class File(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     # save location based on MEDIA_URL and MEDIA_ROOT in ../braid/settings.py
-    file_file = models.FileField()
+    document = models.FileField()
 
     def get_absolute_url(self):
         return reverse('experiments:analysis_info', kwargs={'pk': self.pk})
@@ -62,11 +62,11 @@ class File(models.Model):
             \n\tmimetype type: {} \n\tname: {} \n\tdescription: {}\
             \n\tfile: {}".format(self.experiment, self.path, self.mimetype,
                                  self.mimetype_type, self.name,
-                                 self.file_description, self.file_file))
+                                 self.file_description, self.document))
 
 @receiver(models.signals.post_delete, sender=File)
 def post_delete_file(sender, instance, *args, **kwargs):
-    instance.file_file.delete(save=False)
+    instance.document.delete(save=False)
 
 #Checking If working
 class Feature_BayesianNetwork(models.Model):

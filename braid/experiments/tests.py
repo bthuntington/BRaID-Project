@@ -1,6 +1,11 @@
 from django.test import TestCase
+from django.core.files import File as DjangoFile
+#from . import models
 from . import models
 import factory
+
+
+TEST_PATH = 'experiments/test_files/'  # '/home/britney/braid/repos/braid/braid/experiments/test_files'
 
 
 class CreateAuthorFactory(factory.django.DjangoModelFactory):
@@ -20,7 +25,29 @@ class CreateExperimentFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(CreateAuthorFactory)
 
 
-# class CreateFileFactory(factory.django.DjangoModelFactory):
+class CreateCsvFileFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.File
+
+    document = DjangoFile(open(TEST_PATH + 'test.csv'))
+    name = document.name
+    mimetype = 'Text'
+    mimetype_type = 'csv'
+    description = 'A test csv file'
+    experiment = factory.SubFactory(CreateExperimentFactory)
+
+
+class CreateFastaFileFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.File
+
+    document = DjangoFile(open(TEST_PATH + 'test.fasta'))
+    name = document.name
+    mimetype = 'Text'
+    mimetype_type = 'fasta'
+    description = 'A test fasta file'
+    experiment = factory.SubFactory(CreateExperimentFactory)
+
 
 # class FileUploadTests(TestCase):
 
