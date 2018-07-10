@@ -1,13 +1,14 @@
 from django.test import TestCase
 from django.core.files import File as DjangoFile
-#from . import models
-from . import models
+from . import utils, models
 import factory
 
 
-TEST_PATH = 'experiments/test_files/'  # '/home/britney/braid/repos/braid/braid/experiments/test_files'
+# contains test.(extnsion) files for testing
+TEST_PATH = 'experiments/test_files/'
 
 
+# model factories
 class CreateAuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Author
@@ -49,9 +50,24 @@ class CreateFastaFileFactory(factory.django.DjangoModelFactory):
     experiment = factory.SubFactory(CreateExperimentFactory)
 
 
-# class FileUploadTests(TestCase):
+# test cases
+class FileMimetypeTests(TestCase):
 
-# class FileMimetypeTests(TestCase):
+    """ Check to see that the util class is assigning mimetypes to files
+    correclty """
+    def test_csv_mimetype_util(self):
+        # Check csv file
+        csv = CreateCsvFileFactory()
+        types = utils.get_mimetype_fields(csv.document.path, models.File)
+        self.assertTrue(types[0] == csv.mimetype and
+                        types[1] == csv.mimetype_type)
 
-# TODO: Test file mimetypes correctly identified
+    def test_fasta_mimetype_util(self):
+        # Check fasta file
+        fasta = CreateFastaFileFactory()
+        types = utils.get_mimetype_fields(fasta.document.path, models.File)
+        self.assertTrue(types[0] == fasta.mimetype and
+                        types[1] == fasta.mimetype_type)
+
+
 # TODO: Test uploaded file has all fields and saves
