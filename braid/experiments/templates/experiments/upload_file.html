@@ -1,12 +1,19 @@
+
 {% block content %}
-	<h1 style="text-decoration: underline;"> Submit a file </h1>
-	<form action = "" method="post" enctype="multipart/form-data">
+	<h2 style="text-decoration: underline;"> Add a new file to an existing experiment </h2>
+	<form action = "" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Submit" />
 	</form>
 {% endblock %}
 
-<!-- Alternate Choose File button-->
-		<!--<label for="c">File</label>
-		<input id="c" name="c" type="file" aria-required="true">-->
+
+
+<h2 style="text-decoration: underline;">  Or create a new experiment</h2>
+
+<form action="file_information/" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<input type="submit" value="Create" />
+</form>
+

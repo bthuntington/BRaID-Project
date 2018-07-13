@@ -11,4 +11,8 @@ urlpatterns = [
     # load when running analysis
     path('<int:pk>/analysis/', views.RunAnalysisView.as_view(),
          name='analysis_info'),
+    # allows creation of new experiment
+    path('upload-file/file_information/', views.index,
+         name='file_information'),
+
 ]

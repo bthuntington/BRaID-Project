@@ -11,7 +11,7 @@ class Author(models.Model):
         return self.last_name
 
 class Experiment(models.Model):
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100, unique=True)
     condition = models.CharField(max_length = 1000, null = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
@@ -68,7 +68,7 @@ class File(models.Model):
 def post_delete_file(sender, instance, *args, **kwargs):
     instance.document.delete(save=False)
 
-#Checking If working
+#Checking If functioning
 class Feature_BayesianNetwork(models.Model):
 	network_file = models.FileField(default=1)
 	BN_files = models.ManyToManyField(File, default=1)
@@ -82,7 +82,7 @@ class Feature_FrequentedRegions(models.Model):
 	FR_files = models.ManyToManyField(File, default=1)
 
 # Check many to many function
-# check network deletes files
+# Check network deletes files
 
 
 

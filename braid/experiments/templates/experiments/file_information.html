@@ -1,0 +1,24 @@
+
+<html>
+
+<head>
+	<h2 style='text-decoration: underline;'> Enter Experiment Information </h2>
+</head>
+
+<body>
+	<form action="" method="POST">
+		{% csrf_token %}
+		Experiment Title:<br>
+		<input type='text' name="name"><br>
+		Author's First Name:<br>
+		<input type='text' name="first_name"><br>
+		Author's Last Name:<br>
+		<input type='text' name="last_name"><br>
+		Measured Variable:<br>
+		<input type='text' name="condition"><br>
+  		<input type="submit" value="Submit">
+	</form>
+</body>
+
+</html>
+

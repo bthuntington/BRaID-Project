@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
 from . import utils
-from .models import File
+from .models import File, Experiment, Author
 
 
 class RunAnalysisView(DetailView):
@@ -66,3 +66,24 @@ def upload_file(request):
         form = UploadFileForm()
     # TODO: spot for testing request returns what it's supposed to
     return render(request, 'experiments/upload_file.html', {'form': form})
+
+
+
+def index(request):
+    if request.method == 'POST':
+        if (request.POST.get('name') and request.POST.get('condition') 
+        and request.POST.get('first_name') and request.POST.get('last_name')):
+            name = request.POST['name']
+            condition = request.POST['condition']
+            first = request.POST['first_name']
+            last = request.POST['last_name']
+            auth = Author(first_name=first, last_name=last)
+            auth.save()
+            ex = Experiment(name=name, condition=condition, author=auth)
+            ex.save()
+            return HttpResponseRedirect(reverse('experiments:upload'))
+    get = Experiment.objects.all()
+    context = {
+        'get': get
+    }
+    return render(request, 'experiments/file_information.html', context)
