@@ -103,3 +103,19 @@ venv.bak/
 # mypy
 .mypy_cache/
 braid/experiments/.DS_Store
+braid/experiments/templates/.DS_Store
+braid/experiments/templates/experiments/.DS_Store
+braid/braid/files/.DS_Store
+braid/experiments/migrations/0005_auto_20180709_2000.py
+braid/braid/files/fib.csv
+.DS_Store
+braid/experiments/migrations/0006_auto_20180710_1643.py
+braid/experiments/tests.py
+braid/experiments/tests.py
+braid/experiments/migrations/0008_auto_20180723_1934.py
+braid/experiments/migrations/0007_auto_20180723_1912.py
+braid/braid/files/test_gu5yJ6F.csv
+braid/braid/files/test_d3nXSRi.csv
+braid/braid/files/test.csv
+braid/braid/files/test.fasta
+braid/experiments/templates/experiments/run_analysis.html

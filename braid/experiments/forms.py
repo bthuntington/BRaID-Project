@@ -1,5 +1,5 @@
 from django import forms
-from .models import File
+from .models import File, Experiment, Author
 from django.forms.widgets import CheckboxSelectMultiple
 from . import utils
 
@@ -29,7 +29,7 @@ class PickAnalysisForm(forms.ModelForm):
             # build tuple out of choices
             for opt in options_list:
                 self.OPTIONS = self.OPTIONS + ((opt, opt), )
-            print("OPtions: ", self.OPTIONS)
+            print("Options: ", self.OPTIONS)
         else:
             # tell user there are no avaliable options
             self.OPTIONS = ('No Analysis Options', 'No Analysis Options')
@@ -37,3 +37,10 @@ class PickAnalysisForm(forms.ModelForm):
         # reassign field with new values
         self.fields['selected_analysis'] = forms.MultipleChoiceField(
             widget=forms.CheckboxSelectMultiple, choices=self.OPTIONS)
+
+class AuthorForm(forms.Form):
+
+    authors = forms.ModelChoiceField(queryset=Author.objects.all(), required = False)
+ 
+
+

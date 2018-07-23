@@ -1,19 +1,22 @@
 
 {% block content %}
-	<h2 style="text-decoration: underline;"> Add a new file to an existing experiment </h2>
+	<h2 style="text-decoration: underline;"> Add a new file to an existing experiment</h2>
 	<form action = "" method="POST" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Submit" />
+		<div>
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit" />
+		</div>
 	</form>
 {% endblock %}
 
 
+<div>
+	<h2 style="text-decoration: underline;">  Or create a new experiment</h2>
 
-<h2 style="text-decoration: underline;">  Or create a new experiment</h2>
-
-<form action="file_information/" method="POST" enctype="multipart/form-data">
-	{% csrf_token %}
-	<input type="submit" value="Create" />
-</form>
+	<form action="file_information/" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="submit" value="Create" />
+	</form>
+</div>
 

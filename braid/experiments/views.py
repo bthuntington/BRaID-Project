@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import UploadFileForm, PickAnalysisForm
+from .forms import UploadFileForm, PickAnalysisForm, AuthorForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.generic import DetailView
@@ -68,22 +68,37 @@ def upload_file(request):
     return render(request, 'experiments/upload_file.html', {'form': form})
 
 
-
-def index(request):
+def welcome_page(request):
     if request.method == 'POST':
-        if (request.POST.get('name') and request.POST.get('condition') 
-        and request.POST.get('first_name') and request.POST.get('last_name')):
-            name = request.POST['name']
-            condition = request.POST['condition']
+        return HttpResponseRedirect(reverse('experiments:upload'))
+    return render(request, 'experiments/welcome.html')
+
+
+##############
+
+def get_name(request):
+    form = AuthorForm()
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if (request.POST.get('first_name') and request.POST.get('last_name')):
             first = request.POST['first_name']
             last = request.POST['last_name']
             auth = Author(first_name=first, last_name=last)
             auth.save()
+        else:
+            auth = form['authors']
+            #elif(form.is_valid()):
+            #Incomplete
+            
+        if(request.POST.get('name') and request.POST.get('condition')):
+            name = request.POST['name']
+            condition = request.POST['condition']
             ex = Experiment(name=name, condition=condition, author=auth)
+            #saves new experiment to database
             ex.save()
             return HttpResponseRedirect(reverse('experiments:upload'))
-    get = Experiment.objects.all()
-    context = {
-        'get': get
-    }
-    return render(request, 'experiments/file_information.html', context)
+
+    return render(request, 'experiments/file_information.html',
+        {'form': form})
+
+

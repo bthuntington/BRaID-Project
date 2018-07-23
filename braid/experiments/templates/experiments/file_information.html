@@ -1,6 +1,4 @@
 
-<html>
-
 <head>
 	<h2 style='text-decoration: underline;'> Enter Experiment Information </h2>
 </head>
@@ -8,17 +6,29 @@
 <body>
 	<form action="" method="POST">
 		{% csrf_token %}
-		Experiment Title:<br>
+		Experiment Title:
 		<input type='text' name="name"><br>
-		Author's First Name:<br>
-		<input type='text' name="first_name"><br>
-		Author's Last Name:<br>
-		<input type='text' name="last_name"><br>
-		Measured Variable:<br>
+		<br>
+		Measured Variable:
 		<input type='text' name="condition"><br>
+		<br>
+		<h3 style='text-decoration: underline;'> Select an author already in the database </h3>
+		{{ form }}
+		<br>
+		<h3 style='text-decoration: underline;'> Add a new author</h3>
+		<h4>(Will overwrite any author chosen from the database):</h4>
+		Author's First Name:
+		<input type='text' name="first_name"><br>
+		<br>
+		Author's Last Name:
+		<input type='text' name="last_name"><br>
+		<br>
   		<input type="submit" value="Submit">
+			
 	</form>
 </body>
 
-</html>
-
+<!--
+	Todo:
+		-Make this file a form for repeatability
+		-Allow user to select author or create new one
