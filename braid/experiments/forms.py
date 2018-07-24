@@ -41,6 +41,4 @@ class PickAnalysisForm(forms.ModelForm):
 class AuthorForm(forms.Form):
 
     authors = forms.ModelChoiceField(queryset=Author.objects.all(), required = False)
- 
-
 

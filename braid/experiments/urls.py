@@ -16,5 +16,7 @@ urlpatterns = [
     # allows creation of new experiment
     path('welcome/upload-file/file_information/', views.get_name,
          name='file_information'),
-
+    # shows all experiments, authors, and files
+    path('welcome/upload-file/overview/', views.get_experiments,
+        name='overview')
 ]

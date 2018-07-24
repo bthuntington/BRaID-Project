@@ -12,7 +12,7 @@
 
 
 <div>
-	<h2 style="text-decoration: underline;">  Or create a new experiment</h2>
+	<h2 style="text-decoration: underline;"> Create a new experiment</h2>
 
 	<form action="file_information/" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
@@ -20,3 +20,9 @@
 	</form>
 </div>
 
+<div>
+	<h2 style="text-decoration: underline;"> Look at database </h2>
+<form action="overview/" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+	</form>
+</div>

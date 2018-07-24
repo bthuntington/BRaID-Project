@@ -14,8 +14,8 @@
         {% csrf_token %}
         {{ form.as_p }}
         <!-- TODO: Make an if statement for new list selection form, here or
-            elsewhere 
-        {% if file.analysis_information.all.count > 0 %}         
+            elsewhere
+        {% if file.analysis_information.all.count > 0 %}
             {{ form.as_p }}
         {% else %}
             <p> Your file has no avaliable analysis options. </p>

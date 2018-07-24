@@ -1,0 +1,19 @@
+<h2>Current Experiments in Database: </h2>
+
+<ul>
+	{% for ex in experiments %}
+		<li> Experiment: {{ ex.name }}</li>
+		Author: {{ ex.author.first_name}} {{ ex.author.last_name }}
+		<br> File(s):
+		{% for f in files %}
+			{% if ex.name == f.experiment.name %}
+				<ul><li>{{f.name}}</li></ul>
+			{% endif %}
+		{% empty %}
+			No files in experiment
+
+		{% endfor %}
+		<br>
+	{% endfor %}
+
+</ul>

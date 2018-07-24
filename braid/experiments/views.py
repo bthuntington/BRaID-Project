@@ -73,9 +73,6 @@ def welcome_page(request):
         return HttpResponseRedirect(reverse('experiments:upload'))
     return render(request, 'experiments/welcome.html')
 
-
-##############
-
 def get_name(request):
     form = AuthorForm()
     if request.method == 'POST':
@@ -85,11 +82,11 @@ def get_name(request):
             last = request.POST['last_name']
             auth = Author(first_name=first, last_name=last)
             auth.save()
-        else:
-            auth = form['authors']
+        elif form.is_valid():
+            auth = form.cleaned_data['authors']
             #elif(form.is_valid()):
             #Incomplete
-            
+
         if(request.POST.get('name') and request.POST.get('condition')):
             name = request.POST['name']
             condition = request.POST['condition']
@@ -101,4 +98,12 @@ def get_name(request):
     return render(request, 'experiments/file_information.html',
         {'form': form})
 
+def get_experiments(request):
+    experiments = Experiment.objects.all()
+    files = File.objects.all()
+    context = {
+        'experiments' : experiments,
+        'files' : files
+    }
+    return render(request, 'experiments/overview.html', context)
 

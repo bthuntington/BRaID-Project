@@ -119,3 +119,7 @@ braid/braid/files/test_d3nXSRi.csv
 braid/braid/files/test.csv
 braid/braid/files/test.fasta
 braid/experiments/templates/experiments/run_analysis.html
+braid/braid/files/test_aprjQXx.csv
+braid/braid/files/test_jcyhtqY.fasta
+braid/braid/files/test_VK2bPUT.csv
+braid/experiments/migrations/0009_auto_20180724_1536.py
