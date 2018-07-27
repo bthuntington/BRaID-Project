@@ -84,8 +84,9 @@ def get_name(request):
             auth.save()
         elif form.is_valid():
             auth = form.cleaned_data['authors']
-            #elif(form.is_valid()):
-            #Incomplete
+        elif form2.is_valid():
+            name = form2.cleaned_data['title']
+            condition = form2.cleaned_data['condition']
 
         if(request.POST.get('name') and request.POST.get('condition')):
             name = request.POST['name']
@@ -94,7 +95,6 @@ def get_name(request):
             #saves new experiment to database
             ex.save()
             return HttpResponseRedirect(reverse('experiments:upload'))
-
     return render(request, 'experiments/file_information.html',
         {'form': form})
 

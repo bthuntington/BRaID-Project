@@ -39,6 +39,5 @@ class PickAnalysisForm(forms.ModelForm):
             widget=forms.CheckboxSelectMultiple, choices=self.OPTIONS)
 
 class AuthorForm(forms.Form):
-
-    authors = forms.ModelChoiceField(queryset=Author.objects.all(), required = False)
+    authors = forms.ModelChoiceField(queryset=Author.objects.all(), required = False, empty_label="No Choice")
 

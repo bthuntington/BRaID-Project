@@ -11,7 +11,7 @@ class Author(models.Model):
         return "%s, %s" % (self.last_name, self.first_name)
 
 class Experiment(models.Model):
-    name = models.CharField(max_length = 100, unique=True)
+    name = models.CharField(max_length = 100)
     condition = models.CharField(max_length = 1000, null = True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
@@ -80,10 +80,6 @@ def post_delete_network(sender, instance, *args, **kwargs):
 
 class Feature_FrequentedRegions(models.Model):
 	FR_files = models.ManyToManyField(File, default=1)
-
-# Check many to many function
-# Check network deletes files
-
 
 
 

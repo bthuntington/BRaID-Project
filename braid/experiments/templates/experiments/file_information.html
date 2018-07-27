@@ -4,13 +4,14 @@
 </head>
 
 <body>
+	<meta charset="utf-8" />
 	<form action="" method="POST">
 		{% csrf_token %}
 		Experiment Title:
-		<input type='text' name="name"><br>
+		<input type='text' name="name" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required placeholder="Only letters allowed"><br>
 		<br>
 		Measured Variable:
-		<input type='text' name="condition"><br>
+		<input type='text' name="condition" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required placeholder="Only letters allowed"><br>
 		<br>
 		<h3 style='text-decoration: underline;'> Select an author already in the database </h3>
 		{{ form }}
@@ -18,12 +19,12 @@
 		<h3 style='text-decoration: underline;'> Add a new author</h3>
 		<h4>(Warning: Will overwrite any author chosen from the database):</h4>
 		Author's First Name:
-		<input type='text' name="first_name"><br>
+		<input type='text' name="first_name" pattern="^[a-zA-Z]+\s?[a-zA-Z]+$" placeholder="Only letters allowed"><br>
 		<br>
 		Author's Last Name:
-		<input type='text' name="last_name"><br>
+		<input type='text' name="last_name" pattern="^[a-zA-Z]+\s?[a-zA-Z]+$" placeholder="Only letters allowed"><br>
 		<br>
-  		<input type="submit" value="Submit">
+  		<input type="submit" value="Submit" >
 
 	</form>
 </body>

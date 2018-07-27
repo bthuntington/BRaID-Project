@@ -9,9 +9,8 @@
 			{% if ex.name == f.experiment.name %}
 				<ul><li>{{f.name}}</li></ul>
 			{% endif %}
-		{% empty %}
-			No files in experiment
-
+			{% empty %}
+				None
 		{% endfor %}
 		<br>
 	{% endfor %}
