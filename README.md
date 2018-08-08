@@ -1,4 +1,5 @@
 BRaID-Project
+
 An interactive database allowing access and analysis of experimental data. The project uses the Django web framework in order to create a database and a series of webapages that can be used to modify and access the data.
 
 REQUIREMENTS
